@@ -53,22 +53,19 @@ def create_event():
     return jsonify(new_event.to_dict()), 201
 
 
-# PATCH existing event
 @app.route("/events/<int:id>", methods=["PATCH"])
 def update_event(id):
     data = request.get_json()
 
+    if not data or "title" not in data:
+        return jsonify({"error": "Title is required."}), 400
+
     for event in events:
         if event.id == id:
-            if "title" in data:
-                event.title = data["title"]
-
+            event.title = data["title"]
             return jsonify(event.to_dict()), 200
 
-    return jsonify({
-        "error": "Event not found."
-    }), 404
-
+    return jsonify({"error": "Event not found."}), 404
 
 # DELETE event
 @app.route("/events/<int:id>", methods=["DELETE"])

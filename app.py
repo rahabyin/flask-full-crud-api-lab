@@ -50,7 +50,7 @@ def create_event():
     new_event = Event(new_id, data["title"])
     events.append(new_event)
 
-    return jsonify(new_pevent.to_dict()), 201
+    return jsonify(new_event.to_dict()), 201
 
 
 # PATCH existing event
